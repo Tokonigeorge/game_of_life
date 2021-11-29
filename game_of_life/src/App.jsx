@@ -3,8 +3,9 @@ import "./App.css";
 import { produce } from "immer";
 import { useMediaQuery } from "./MatchMedia";
 
-const rows = 50;
-const columns = 50;
+// const rows = Math.round((window.innerHeight - 40) / 200) * 10;
+const columns = Math.round((window.innerWidth - 70) / 20);
+const rows = columns;
 
 const operations = [
   [0, 1],
@@ -94,7 +95,7 @@ function App() {
       >
         Clear
       </button>
-      <div style={{ margin: "auto", width: "90vw" }}>
+      <div style={{ margin: "0 auto" }}>
         <div
           className="App"
           style={{

@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import "./App.css";
 import { produce } from "immer";
+import { useMediaQuery } from "./MatchMedia";
 
 const rows = 50;
 const columns = 50;
@@ -93,34 +94,36 @@ function App() {
       >
         Clear
       </button>
-      <div
-        className="App"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${columns}, 20px)`,
-        }}
-      >
-        {Array.isArray(grid)
-          ? grid.map((rows, i) =>
-              rows.map((columns, k) => (
-                <div
-                  key={`${i - k}`}
-                  onClick={() => {
-                    const newGrid = produce(grid, (copy) => {
-                      copy[i][k] = grid[i][k] ? 0 : 1;
-                    });
-                    setGrid(newGrid);
-                  }}
-                  style={{
-                    width: 20,
-                    height: 20,
-                    backgroundColor: grid[i][k] ? "pink" : undefined,
-                    border: "solid 1px black",
-                  }}
-                ></div>
-              ))
-            )
-          : null}
+      <div style={{ margin: "auto", width: "90vw" }}>
+        <div
+          className="App"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${columns}, 20px)`,
+          }}
+        >
+          {Array.isArray(grid)
+            ? grid.map((rows, i) =>
+                rows.map((columns, k) => (
+                  <div
+                    key={`${i - k}`}
+                    onClick={() => {
+                      const newGrid = produce(grid, (copy) => {
+                        copy[i][k] = grid[i][k] ? 0 : 1;
+                      });
+                      setGrid(newGrid);
+                    }}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      backgroundColor: grid[i][k] ? "black" : undefined,
+                      border: "solid 1px grey",
+                    }}
+                  ></div>
+                ))
+              )
+            : null}
+        </div>
       </div>
     </>
   );

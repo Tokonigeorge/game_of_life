@@ -95,7 +95,7 @@ function App() {
       >
         Clear
       </button>
-      <div style={{ margin: "0 auto" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           className="App"
           style={{

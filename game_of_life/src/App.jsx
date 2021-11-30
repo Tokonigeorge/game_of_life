@@ -4,7 +4,7 @@ import { produce } from "immer";
 import Button from "./components/Button";
 
 const rows = Math.round(
-  (window.innerHeight > 790 ? columns : window.innerHeight - 100) / 20
+  (window.innerHeight > 790 ? columns : window.innerHeight - 300) / 20
 );
 const columns = Math.round(
   (window.innerWidth > 790 ? 790 : window.innerWidth - 70) / 20
@@ -115,11 +115,11 @@ function App() {
           <div
             style={{
               position: "absolute",
-              top: "20vh",
+              top: window.innerWidth > 790 ? "20vh" : "25vh",
               left: window.innerWidth > 790 ? "30vw" : "15vw",
               width: window.innerWidth > 790 ? "40vw" : "70vw",
               backgroundColor: "white",
-              height: "60vh",
+              height: window.innerWidth > 790 ? "60vh" : "50vh",
               border: "1px solid white",
               borderRadius: "5px",
               overflowY: "scroll",

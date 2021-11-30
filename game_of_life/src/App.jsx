@@ -106,7 +106,7 @@ function App() {
       <div
         className="App"
         style={{
-          backgroundColor: "#FFFFFF",
+          backgroundColor: "#EBEBEB",
           minHeight: "100vh",
           position: "relative",
         }}
@@ -115,12 +115,12 @@ function App() {
           <div
             style={{
               position: "absolute",
-              top: window.innerWidth > 790 ? "20vh" : "25vh",
+              top: "20vh",
               left: window.innerWidth > 790 ? "30vw" : "15vw",
               width: window.innerWidth > 790 ? "40vw" : "70vw",
-              backgroundColor: "white",
-              height: window.innerWidth > 790 ? "60vh" : "50vh",
-              border: "1px solid white",
+              backgroundColor: "#FFFFFF",
+              height: "60vh",
+              border: "1px solid #FFFFFF",
               borderRadius: "5px",
               overflowY: "scroll",
               overflowX: "hidden",
@@ -182,7 +182,7 @@ function App() {
           style={{
             display: "flex",
             justifyContent: "center",
-            paddingTop: "5vh",
+            paddingTop: "10vh",
           }}
         >
           <div

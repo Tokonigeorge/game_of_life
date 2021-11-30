@@ -42,6 +42,8 @@ function App() {
   const startRef = useRef(start);
   startRef.current = start;
 
+  const [open, setOpen] = useState(false);
+
   const runStart = useCallback(() => {
     if (!startRef.current) {
       return;
@@ -95,6 +97,10 @@ function App() {
     setGrid(_rows);
   };
 
+  const handleToggleModal = () => {
+    setOpen(!open);
+  };
+
   return (
     <>
       <div
@@ -105,17 +111,73 @@ function App() {
           position: "relative",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            top: "10vh",
-            left: "0",
-            margin: "auto",
-            width: "40vw",
-            backgroundColor: "black",
-            minHeight: "80vh",
-          }}
-        ></div>
+        {open && (
+          <div
+            style={{
+              position: "absolute",
+              top: "20vh",
+              left: window.innerWidth > 790 ? "30vw" : "15vw",
+              width: window.innerWidth > 790 ? "40vw" : "70vw",
+              backgroundColor: "white",
+              height: "60vh",
+              border: "1px solid white",
+              borderRadius: "5px",
+              overflowY: "scroll",
+              overflowX: "hidden",
+              color: "#353535",
+            }}
+          >
+            <div
+              style={{
+                marginLeft: window.innerWidth > 790 ? "90%" : "85%",
+                marginTop: "1em",
+                cursor: "pointer",
+              }}
+              onClick={handleToggleModal}
+            >
+              <ClearIcon />
+            </div>
+            <div
+              style={{
+                padding: window.innerWidth > 790 ? "0 2em" : "0 1em",
+                marginTop: "-2em",
+              }}
+            >
+              <h2>John Conway's game of Life</h2>
+              <p>
+                The Game of Life is not your typical computer game. It is a
+                cellular automaton, and was invented by Cambridge mathematician
+                John Conway.
+              </p>
+              <p>
+                This game became widely known when it was mentioned in an
+                article published by Scientific American in 1970. It consists of
+                a collection of cells which, based on a few mathematical rules,
+                can live, die or multiply. Depending on the initial conditions,
+                the cells form various patterns throughout the course of the
+                game.
+              </p>
+              <h4>Rules</h4>
+              <p style={{ marginTop: "-0.5em" }}>
+                For a space that is populated:
+              </p>
+              <p>Each cell with one or no neighbors dies, as if by solitude.</p>
+              <p>
+                Each cell with four or more neighbors dies, as if by
+                overpopulation.
+              </p>
+              <p>Each cell with two or three neighbors survives.</p>
+              <p>For a space that is empty or unpopulated:</p>
+              <p>Each cell with three neighbours becomes populated</p>
+              <h4>The Controls</h4>
+              <p style={{ marginTop: "-0.5em" }}>
+                Make a pattern by clicking on the cells. The 'Start' button
+                advances the game by several generations (each new generation
+                corresponding to one iteration of the rules).
+              </p>
+            </div>
+          </div>
+        )}
         <div
           style={{
             display: "flex",
@@ -180,7 +242,11 @@ function App() {
             marginRight="10px"
             random={true}
           />
-          <Button text={"Explanation"} handleClick={() => {}} details={true} />
+          <Button
+            text={"Explanation"}
+            handleClick={handleToggleModal}
+            details={true}
+          />
         </div>
       </div>
     </>
@@ -188,3 +254,21 @@ function App() {
 }
 
 export default App;
+
+const ClearIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="48"
+      height="48"
+      fillRule="#353535"
+      viewBox="0 0 48 48"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+      />
+    </svg>
+  );
+};

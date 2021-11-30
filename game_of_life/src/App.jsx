@@ -1,11 +1,14 @@
 import { useState, useRef, useCallback } from "react";
 import "./App.css";
 import { produce } from "immer";
-import { useMediaQuery } from "./MatchMedia";
+import Button from "./components/Button";
 
-// const rows = Math.round((window.innerHeight - 40) / 200) * 10;
-const columns = Math.round((window.innerWidth - 70) / 20);
-const rows = columns;
+const rows = Math.round(
+  (window.innerHeight > 790 ? columns : window.innerHeight - 100) / 20
+);
+const columns = Math.round(
+  (window.innerWidth > 790 ? 790 : window.innerWidth - 70) / 20
+);
 
 const operations = [
   [0, 1],
@@ -30,13 +33,7 @@ const emptyGrid = () => {
 function App() {
   //init the function in the usestate so it'll run only once upon app loading
   const [grid, setGrid] = useState(() => {
-    // return emptyGrid();
-    const _rows = [];
-    for (let i = 0; i < rows; i++) {
-      //push an array from a array of columns containing zero in the initial state
-      _rows.push(Array.from(Array(columns), () => 0));
-    }
-    return _rows;
+    return emptyGrid();
   });
 
   const [start, setStart] = useState(false);
@@ -74,56 +71,116 @@ function App() {
     setTimeout(runStart, 100);
   }, []);
 
+  const handleToggleStart = () => {
+    setStart(!start);
+
+    if (!start) {
+      startRef.current = true;
+      runStart();
+    }
+  };
+
+  const handleEmptyGrid = () => {
+    setGrid(emptyGrid());
+  };
+
+  const handleRandomState = () => {
+    const _rows = [];
+    for (let i = 0; i < rows; i++) {
+      _rows.push(
+        Array.from(Array(columns), () => (Math.random() > 0.7 ? 1 : 0))
+      );
+    }
+
+    setGrid(_rows);
+  };
+
   return (
     <>
-      <button
-        onClick={() => {
-          setStart(!start);
-
-          if (!start) {
-            startRef.current = true;
-            runStart();
-          }
+      <div
+        className="App"
+        style={{
+          backgroundColor: "#FFFFFF",
+          minHeight: "100vh",
+          position: "relative",
         }}
       >
-        {start ? "Stop" : "Start"}
-      </button>
-      <button
-        onClick={() => {
-          setGrid(emptyGrid());
-        }}
-      >
-        Clear
-      </button>
-      <div style={{ display: "flex", justifyContent: "center" }}>
         <div
-          className="App"
           style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${columns}, 20px)`,
+            position: "absolute",
+            top: "10vh",
+            left: "0",
+            margin: "auto",
+            width: "40vw",
+            backgroundColor: "black",
+            minHeight: "80vh",
+          }}
+        ></div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "5vh",
           }}
         >
-          {Array.isArray(grid)
-            ? grid.map((rows, i) =>
-                rows.map((columns, k) => (
-                  <div
-                    key={`${i - k}`}
-                    onClick={() => {
-                      const newGrid = produce(grid, (copy) => {
-                        copy[i][k] = grid[i][k] ? 0 : 1;
-                      });
-                      setGrid(newGrid);
-                    }}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      backgroundColor: grid[i][k] ? "black" : undefined,
-                      border: "solid 1px grey",
-                    }}
-                  ></div>
-                ))
-              )
-            : null}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${columns}, 20px)`,
+            }}
+          >
+            {Array.isArray(grid)
+              ? grid.map((rows, i) =>
+                  rows.map((columns, k) => (
+                    <div
+                      key={`${i - k}`}
+                      onClick={() => {
+                        const newGrid = produce(grid, (copy) => {
+                          copy[i][k] = grid[i][k] ? 0 : 1;
+                        });
+                        setGrid(newGrid);
+                      }}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        backgroundColor: grid[i][k] ? "#353535" : "#D2D7DF",
+                        border: "solid 1px grey",
+                      }}
+                    ></div>
+                  ))
+                )
+              : null}
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1em 0",
+            flexWrap: "wrap",
+          }}
+        >
+          <Button
+            text={start ? "Stop" : "Start"}
+            handleClick={handleToggleStart}
+            marginRight="10px"
+            play={!start}
+            pause={start}
+          />
+          <Button
+            text={"Clear"}
+            handleClick={handleEmptyGrid}
+            marginRight="10px"
+            clear={true}
+          />
+          <Button
+            text={"Random"}
+            handleClick={handleRandomState}
+            marginRight="10px"
+            random={true}
+          />
+          <Button text={"Explanation"} handleClick={() => {}} details={true} />
         </div>
       </div>
     </>

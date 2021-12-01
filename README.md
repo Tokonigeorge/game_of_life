@@ -33,3 +33,6 @@
                   advances the game by several generations (each new generation
                   corresponding to one iteration of the rules).
                 </p>
+                <h3>Link to deploy: </h3>
+                <a href="https://cellular-automation-conways.netlify.app/">https://cellular-automation-conways.netlify.app/</a>
+
